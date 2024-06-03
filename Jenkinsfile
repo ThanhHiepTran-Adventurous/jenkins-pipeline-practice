@@ -31,7 +31,7 @@ pipeline {
             stage('Deploy MySQL to DEV') {
                 steps {
                     echo 'Deploying and cleaning'
-                    sh 'docker image pull mysql:8.0'
+                    sh 'docker pull mysql:8.0'
                     sh 'docker network create dev || echo "this network exists"'
                     sh 'docker container stop mysql-8.0 || echo "this container does not exist"'
                     sh 'echo y | docker container prune'
