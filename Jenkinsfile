@@ -18,15 +18,18 @@ pipeline {
             }
         }
 
-        stage('Packaging/Pushing image') {
-
-            steps {
-                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t hiepthanhtran/springboot .'
-                    sh 'docker push hiepthanhtran/springboot'
+        stages {
+                stage('Packaging/Pushing image') {
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+                                sh 'docker build -t hiepthanhtran/springboot .'
+                                sh 'docker push hiepthanhtran/springboot'
+                            }
+                        }
+                    }
                 }
             }
-        }
 
             stage('Deploy MySQL to DEV') {
                 steps {
