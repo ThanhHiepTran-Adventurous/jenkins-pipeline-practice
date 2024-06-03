@@ -36,7 +36,8 @@ pipeline {
                 sh 'docker container stop mysql-8.0.37 || echo "this container does not exist" '
                 sh 'echo y | docker container prune '
 //                 sh 'docker volume rm hiepthanhtran-mysql-data || echo "no volume"'
-                sh 'docker run --name mysql-8.0.37 -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123456789 -d mysql:8.0.37-debian'
+                sh 'docker run --name mysql-8.0.37 -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=db_example_jenkins -d mysql:8.0.37-debian'
+                sh 'sleep 20' // Đợi MySQL khởi động hoàn toàn
 //                 sh "docker run --name hiepthanhtran-mysql --rm --network dev -v hiepthanhtran-mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=db_example  -d mysql:8.0 "
 //                 sh 'sleep 20'
 //                 sh "docker exec -i hiepthanhtran-mysql mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} < script"
