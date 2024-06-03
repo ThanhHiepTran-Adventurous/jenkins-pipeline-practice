@@ -2,8 +2,8 @@ pipeline {
 
     agent any
 
-    tools { 
-        maven 'my-maven' 
+    tools {
+        maven 'my-maven'
     }
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
@@ -18,17 +18,35 @@ pipeline {
             }
         }
 
-
-               stage('Packaging/Pushing image') {
-                           steps {
-                               script {
-                                   withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                                       sh 'docker build -t hiepthanhtran/springboot .'
-                                       sh 'docker push hiepthanhtran/springboot'
-                                   }
-                               }
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t hiepthanhtran/springboot .'
+                }
+            }
+        }
+        stage('Push image to Hub'){
+                    steps{
+                        script{
+                           withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                               // some block
+                               sh 'docker login -u hiepthanhtran -p ${dockerhubpwd}'
                            }
-                       }
+                           sh 'docker push hiepthanhtran/springboot'
+                        }
+                    }
+                }
+
+//                stage('Packaging/Pushing image') {
+//                            steps {
+//                                script {
+//                                    withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+//                                        sh 'docker build -t hiepthanhtran/springboot .'
+//                                        sh 'docker push hiepthanhtran/springboot'
+//                                    }
+//                                }
+//                            }
+//                        }
 
 
             stage('Deploy MySQL to DEV') {
