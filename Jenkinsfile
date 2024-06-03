@@ -22,7 +22,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t hiepthanhtran/khalid-spring-0.0.1-SNAPSHOT .'
+                    sh 'docker build -t hiepthanhtran/jenkins-dockerhub .'
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
                                // some block
                                sh 'docker login -u hiepthanhtran -p ${dockerhubpwd}'
                            }
-                           sh 'docker push hiepthanhtran/khalid-spring-0.0.1-SNAPSHOT'
+                           sh 'docker push hiepthanhtran/jenkins-dockerhub'
                         }
                     }
                 }
@@ -74,12 +74,12 @@ pipeline {
         stage('Deploy Spring Boot to DEV') {
             steps {
                 echo 'Deploying and cleaning'
-                sh 'docker image pull hiepthanhtran/khalid-spring-0.0.1-SNAPSHOT'
+                sh 'docker image pull hiepthanhtran/jenkins-dockerhub'
                 sh 'docker container stop hiepthanhtran-springboot || echo "this container does not exist" '
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
 
-                sh 'docker container run -d --rm --name hiepthanhtran-springboot -p 8081:8080 --network dev hiepthanhtran/khalid-spring-0.0.1-SNAPSHOT'
+                sh 'docker container run -d --rm --name hiepthanhtran-springboot -p 8081:8080 --network dev hiepthanhtran/jenkins-dockerhub'
             }
         }
  
