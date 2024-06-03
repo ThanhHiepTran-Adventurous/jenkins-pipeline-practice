@@ -12,16 +12,18 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
-                sh 'mvn --version'
-                sh 'java -version'
-                sh 'mvn clean package -Dmaven.test.failure.ignore=true'
+//                 sh 'mvn --version'
+//                 sh 'java -version'
+//                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
+                   sh 'mvn clean install'
+
             }
         }
 
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t hiepthanhtran/springboot .'
+                    sh 'docker build -t hiepthanhtran/khalid-spring-0.0.1-SNAPSHOT .'
                 }
             }
         }
@@ -32,7 +34,7 @@ pipeline {
                                // some block
                                sh 'docker login -u hiepthanhtran -p ${dockerhubpwd}'
                            }
-                           sh 'docker push hiepthanhtran/springboot'
+                           sh 'docker push hiepthanhtran/khalid-spring-0.0.1-SNAPSHOT'
                         }
                     }
                 }
@@ -73,12 +75,12 @@ pipeline {
         stage('Deploy Spring Boot to DEV') {
             steps {
                 echo 'Deploying and cleaning'
-                sh 'docker image pull hiepthanhtran/springboot'
+                sh 'docker image pull hiepthanhtran/khalid-spring-0.0.1-SNAPSHOT'
                 sh 'docker container stop hiepthanhtran-springboot || echo "this container does not exist" '
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
 
-                sh 'docker container run -d --rm --name hiepthanhtran-springboot -p 8081:8080 --network dev hiepthanhtran/springboot'
+                sh 'docker container run -d --rm --name hiepthanhtran-springboot -p 8081:8080 --network dev hiepthanhtran/khalid-spring-0.0.1-SNAPSHOT'
             }
         }
  
