@@ -31,15 +31,15 @@ pipeline {
             stage('Deploy MySQL to DEV') {
                 steps {
                     echo 'Deploying and cleaning'
-                    sh 'docker image pull mysql:8.0.37-debian'
+                    sh 'docker image pull mysql:8.0'
                     sh 'docker network create dev || echo "this network exists"'
-                    sh 'docker container stop mysql-8.0.37 || echo "this container does not exist"'
+                    sh 'docker container stop mysql-8.0 || echo "this container does not exist"'
                     sh 'echo y | docker container prune'
-                    sh 'docker run --name mysql-8.0.37 -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=db_example_jenkins -d mysql:8.0.37-debian'
+                    sh 'docker run --name mysql-8.0 -p 3308:3306 -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=db_example_jenkins -d mysql:8.0'
                     // Đợi MySQL khởi động hoàn toàn
                     retry(5) {
                         sleep(time: 10, unit: 'SECONDS')
-                        sh 'docker exec mysql-8.0.37 mysqladmin ping -h localhost --silent'
+                        sh 'docker exec mysql-8.0 mysqladmin ping -h localhost --silent'
                     }
                 }
             }
