@@ -16,7 +16,8 @@ pipeline {
             steps {
                 sh 'mvn --version'
                 sh 'java -version'
-                sh 'mvn clean package -Dmaven.test.failure.ignore=true'
+                //sh 'mvn clean package -Dmaven.test.failure.ignore=true'
+                sh 'mvn clean install'
             }
         }
 
@@ -56,7 +57,7 @@ pipeline {
                     // sh 'echo y | docker container prune'
                      //sh 'docker volume rm thanhhiep-mysql-data || echo "no volume"'
                            // sh 'docker run --name mysql-8.0 -p 3308:3306 -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=db_example_jenkins -d mysql:8.0'
-                     sh "docker run --name mysql-8.0 --rm --network dev -v thanhhiep-mysql-data:/var/lib/mysql -p 3308:3306 -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=db_example_jenkinsV2 -d mysql:8.0 "
+                     sh "docker run --name mysql-8.0 --rm --network dev -v thanhhiep-mysql-data:/var/lib/mysql -p 3308:3306 -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=db_example_jenkinsV3 -d mysql:8.0 "
 //                      sh 'sleep 20'
 //                      sh "docker exec -i mysql-8.0 mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} < script"
 //                             // Đợi MySQL khởi động hoàn toàn
