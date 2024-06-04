@@ -27,6 +27,17 @@ pipeline {
                         }
                     }
         }
+        stage('Push image to hub'){
+                            steps{
+                                script{
+                                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                                        // some block
+                                        sh 'docker login -u hiepthanhtran -p ${dockerhubpwd}'
+                                    }
+                                    sh 'docker push hiepthanhtran/devops-integration'
+                                }
+                            }
+                }
     }
     post {
         // Clean after build
