@@ -6,7 +6,7 @@ pipeline {
         maven 'my-maven'
     }
     environment {
-        MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
+//         MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
         DOCKER_HOME = tool name: 'docker-jenkins', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
         PATH = "${DOCKER_HOME}/bin:${env.PATH}"
     }
@@ -24,22 +24,22 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t hiepthanhtran/jenkins-dockerhub .'
+                    sh 'docker build -t hiepthanhtran/devops-integration .
                 }
             }
         }
-        stage('Push image to Hub'){
-                    steps{
-                        script{
-                           withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                               // some block
-                               sh 'docker login -u hiepthanhtran -p ${dockerhubpwd}'
-                           }
-                           sh 'docker push hiepthanhtran/jenkins-dockerhub'
-                        }
-                    }
-                }
-
+//         stage('Push image to Hub'){
+//                     steps{
+//                         script{
+//                            withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+//                                // some block
+//                                sh 'docker login -u hiepthanhtran -p ${dockerhubpwd}'
+//                            }
+//                            sh 'docker push hiepthanhtran/devops-integration'
+//                         }
+//                     }
+//                 }
+//
 //                stage('Packaging/Pushing image') {
 //                            steps {
 //                                script {
