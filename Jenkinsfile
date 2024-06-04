@@ -6,11 +6,9 @@ pipeline {
         maven 'my-maven'
     }
     environment {
-
-    //
-//         MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
+       // MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
         DOCKER_HOME = tool name: 'docker-jenkins', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-        PATH = "${DOCKER_HOME}/bin:${env.PATH}"
+                PATH = "${DOCKER_HOME}/bin:${env.PATH}"
     }
     stages {
 
@@ -19,16 +17,15 @@ pipeline {
                 sh 'mvn --version'
                 sh 'java -version'
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
-
             }
         }
 
         stage('Build docker image'){
-            steps{
-                script{
-                    sh 'docker build -t hiepthanhtran/devops-integration .
-                }
-            }
+                    steps{
+                        script{
+                            sh 'docker build -t hiepthanhtran/devops-integration .'
+                        }
+                    }
         }
     }
     post {
