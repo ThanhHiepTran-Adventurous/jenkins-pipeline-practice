@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
        // MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
-        DOCKER_HOME = tool name: 'Jenkins-pipeline', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+        DOCKER_HOME = tool name: 'docker-jenkins', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
                 PATH = "${DOCKER_HOME}/bin:${env.PATH}"
     }
     stages {
