@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jenkins/caches/git-a23bf6c36b0452df878180aa878836f7" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jenkins/workspace/Jenkins-pipeline" vcs="Git" />
   </component>
 </project>
