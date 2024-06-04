@@ -28,16 +28,25 @@ pipeline {
                     }
         }
         stage('Push image to hub'){
-                            steps{
-                                script{
-                                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                                        // some block nè
-                                        sh 'docker login -u hiepthanhtran -p ${dockerhubpwd}'
-                                    }
+                    steps{
+                          script{
+                               withCredentials([usernamePassword(credentialsId: 'dockerhubAccount', usernameVariable: 'DOCKER_USER',
+                                     passwordVariable: 'DOCKER_PASS')]){
+                                                        sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
+                                     }
+
                                     sh 'docker push hiepthanhtran/devops-integration'
-                                }
-                            }
-                }
+
+                          }
+                    }
+        }
+        stage('Logout docker hub') {
+             steps{
+                  script{
+                      sh 'docker logout'
+                  }
+             }
+        }
     }
     post {
         // Clean after build
