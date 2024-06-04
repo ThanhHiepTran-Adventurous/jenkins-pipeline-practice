@@ -31,7 +31,7 @@ pipeline {
                             steps{
                                 script{
                                     withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                                        // some block
+                                        // some block nè
                                         sh 'docker login -u hiepthanhtran -p ${dockerhubpwd}'
                                     }
                                     sh 'docker push hiepthanhtran/devops-integration'
