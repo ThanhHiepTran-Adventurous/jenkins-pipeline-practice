@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 8088:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - ./jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    name: app-network
+    driver: bridge
+
+#docker-compose -f ./deployment.yml up -d jenkins
