@@ -70,11 +70,8 @@ pipeline {
                 // Run the MySQL container
                 sh "docker run --name mysql-8.0 --network dev -v thanhhiep-mysql-data:/var/lib/mysql -p 3308:3306 -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=db_example_jenkinsV3 -d mysql:8.0"
 
-                // Wait for MySQL to be fully up and running
-                retry(5) {
-                    sleep(time: 10, unit: 'SECONDS')
-                    sh 'docker exec mysql-8.0 mysqladmin ping -h localhost --silent'
-                }
+                sh 'sleep 20'
+                sh "docker exec -i mysql-8.0 mysql --user=root --password=123456789"
 
                 // Additional commands can be added here, e.g. initializing the database with a script
                 // sh "docker exec -i mysql-8.0 mysql --user=root --password=123456789 < /path/to/your/script.sql"
